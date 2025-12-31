@@ -407,20 +407,26 @@ h1{
 
 .proj-media{
   display:flex;
-  gap:12px;
-  align-items:center;
+  flex-direction:column;
+  gap:8px;
+  align-items:stretch;
   margin-top:12px;
   margin-bottom:8px;
 }
 .proj-img{
-  width:140px;
-  height:86px;
+  width:100%;
+  height:160px;
   object-fit:cover;
   border-radius:12px;
   border:1px solid rgba(255,255,255,.06);
   background:rgba(255,255,255,.02);
 }
-.proj .btn.ghost.proj-video{padding:8px 10px}
+.proj .btn.ghost.proj-video{
+  padding:10px 14px;
+  border-radius:999px;
+  font-weight:900;
+  align-self:flex-end;
+}
 
 .proj::before{
   content:"";

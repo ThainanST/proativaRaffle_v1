@@ -65,8 +65,8 @@ a{color:inherit}
 }
 
 .logo{
-  width:40px;
-  height:40px;
+  width:80px;
+  height:80px;
   border-radius:12px;
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.05);
@@ -404,6 +404,23 @@ h1{
   position:relative;
   overflow:hidden;
 }
+
+.proj-media{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-top:12px;
+  margin-bottom:8px;
+}
+.proj-img{
+  width:140px;
+  height:86px;
+  object-fit:cover;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.02);
+}
+.proj .btn.ghost.proj-video{padding:8px 10px}
 
 .proj::before{
   content:"";

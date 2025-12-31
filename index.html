@@ -11,7 +11,7 @@
     <header class="topbar">
       <div class="brand-left">
         <div class="logo-group" aria-label="Logos">
-          <img class="logo" alt="Logo Engenharia Elétrica UFOP" src="assets/img/ufop-logo.png"/>
+          <img class="logo" alt="Logo Engenharia Elétrica UFOP" src="assets/img/deelt-logo.png"/>
           <img class="logo" alt="Logo BitLab (Pró-Ativa Eletrônica)" src="assets/img/bit-lab-logo.png"/>
         </div>
         <div class="brand-text">
@@ -21,9 +21,9 @@
       </div>
 
       <div class="actions">
-        <div class="chip">🎥 Vídeo curto explicativo</div>
+        <a class="chip" id="videoChip" href="#" target="_blank" rel="noopener">🎥 Vídeo explicativo</a>
         <div class="chip" id="soldChip">🎫 Rifas vendidas: <b id="soldText">320 / 1.000</b></div>
-        <a class="btn primary" id="buyTop" href="https://forms.gle/SEU_LINK_AQUI" target="_blank" rel="noopener">Comprar + enviar comprovante</a>
+        <a class="btn primary" id="buyTop" href="#" target="_blank" rel="noopener">Comprar + enviar comprovante</a>
       </div>
     </header>
 
@@ -35,7 +35,7 @@
           <p class="sub">Apoie a criação de dispositivos interativos didáticos do Pró-Ativa Eletrônica (UFOP). Todo o valor arrecadado é reinvestido nos projetos.</p>
 
           <div class="cta-row">
-            <a class="btn primary" id="buyHero" href="https://forms.gle/SEU_LINK_AQUI" target="_blank" rel="noopener">Comprar número da rifa</a>
+            <a class="btn primary" id="buyHero" href="#" target="_blank" rel="noopener">Comprar número da rifa</a>
             <button class="btn ghost" id="learnMoreBtn" type="button">Saiba mais</button>
           </div>
 
@@ -68,7 +68,7 @@
             <div class="video-meta">
               <div>
                 <div class="t">Vídeo explicativo</div>
-                <div class="s">Clique para abrir (substitua pelo link do seu vídeo)</div>
+                <div class="s">Clique para abrir </div>
               </div>
               <a class="btn ghost" style="padding:10px 12px" id="videoLink" href="#" onclick="return false">Abrir</a>
             </div>
@@ -92,14 +92,13 @@
             <div class="b">Abra o formulário, escolha a quantidade de números e envie o comprovante no final.</div>
           </div>
         </div>
-        <a class="btn primary" id="formBtn" href="https://forms.gle/SEU_LINK_AQUI" target="_blank" rel="noopener">Abrir formulário</a>
+        <a class="btn primary" id="formBtn" href="#" target="_blank" rel="noopener">Abrir formulário</a>
       </div>
 
       <section class="section" id="learnMore">
         <div class="section-head">
           <div>
             <h2>Projetos já construídos</h2>
-            <p>Curto e direto. Quem quiser detalhes, abre.</p>
           </div>
         </div>
 
@@ -109,7 +108,12 @@
             <h3>Gerador de Van de Graaff</h3>
             <div class="quick">Eletricidade estática na prática. Visual, seguro e memorável.</div>
 
-            <div class="accordion">
+              <div class="proj-media">
+                <img class="proj-img" id="graafImg" src="assets/img/placeholder.svg" alt="Van de Graaff (placeholder)">
+                <a class="btn ghost" id="graafVideo" href="#" target="_blank" rel="noopener">Ver vídeo</a>
+              </div>
+
+              <div class="accordion">
               <button class="acc-btn" type="button" aria-expanded="false">
                 <span>Saiba mais</span>
                 <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -127,7 +131,12 @@
             <h3>Mão Robótica “Manus”</h3>
             <div class="quick">Controle por botões/joystick + câmera. Altamente chamativo.</div>
 
-            <div class="accordion">
+              <div class="proj-media">
+                <img class="proj-img" id="manusImg" src="assets/img/placeholder.svg" alt="Mão Robótica (placeholder)">
+                <a class="btn ghost" id="manusVideo" href="#" target="_blank" rel="noopener">Ver vídeo</a>
+              </div>
+
+              <div class="accordion">
               <button class="acc-btn" type="button" aria-expanded="false">
                 <span>Saiba mais</span>
                 <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -145,7 +154,12 @@
             <h3>EletroWay</h3>
             <div class="quick">Percorra o trajeto sem encostar. Contato elétrico detectado na hora.</div>
 
-            <div class="accordion">
+              <div class="proj-media">
+                <img class="proj-img" id="eletrowayImg" src="assets/img/placeholder.svg" alt="EletroWay (placeholder)">
+                <a class="btn ghost" id="eletrowayVideo" href="#" target="_blank" rel="noopener">Ver vídeo</a>
+              </div>
+
+              <div class="accordion">
               <button class="acc-btn" type="button" aria-expanded="false">
                 <span>Saiba mais</span>
                 <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -174,11 +188,19 @@
               <div class="b">Compra e envio do comprovante pelo formulário.</div>
             </div>
           </div>
-          <a class="btn primary" id="buyBottom" href="https://forms.gle/SEU_LINK_AQUI" target="_blank" rel="noopener">Comprar agora</a>
+          <a class="btn primary" id="buyBottom" href="#" target="_blank" rel="noopener">Comprar agora</a>
         </div>
 
         <div class="footer">
-          Ajuste rápido: substitua <b>SEU_LINK_AQUI</b> pelo link real do Google Form. Se quiser, eu também deixo o campo “rifas vendidas / total / preço” parametrizado para você alterar em 1 lugar só.
+          <p style="display:inline">© 2025 Pró-Ativa Eletrônica • Engenharia Elétrica UFOP • Desenvolvido por BitLab</p>
+          <a id="instagramLink" class="chip" href="#" target="_blank" rel="noopener" style="margin-left:12px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:8px">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>
+            </svg>
+            <span id="instagramText">Instagram</span>
+          </a>
         </div>
       </section>
     </main>

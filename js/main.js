@@ -43,15 +43,36 @@ function applyConfig(){
   // populate topbar video chip if video URL present
   if (CONFIG.videoUrl) setHref('videoChip', CONFIG.videoUrl);
 
+  // get video frame/link elements once
   const vf = document.getElementById("videoFrame");
   const vl = document.getElementById("videoLink");
 
+  // if videoUrl is a YouTube link, set thumbnail as background for #videoFrame
+  if (vf) {
+    if (CONFIG.videoUrl) {
+      const ytId = extractYouTubeID(CONFIG.videoUrl);
+      if (ytId) {
+        const thumb = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+        vf.style.backgroundImage = `url("${thumb}")`;
+        vf.style.backgroundSize = 'cover';
+        vf.style.backgroundPosition = 'center';
+      } else {
+        vf.style.backgroundImage = '';
+      }
+    } else {
+      vf.style.backgroundImage = '';
+    }
+  }
+
   if (CONFIG.videoUrl && CONFIG.videoUrl.trim().length > 0){
     vl.setAttribute("href", CONFIG.videoUrl);
-    vl.onclick = null;
+    // ensure main video link opens as a floating modal instead of a new tab
+    vl.removeAttribute("target");
+    vl.removeAttribute("rel");
+    vl.onclick = (e) => { e.preventDefault(); openVideoModal(CONFIG.videoUrl); };
     vl.textContent = "Abrir vídeo";
-    vf.onclick = () => window.open(CONFIG.videoUrl, "_blank", "noopener");
-    vf.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") window.open(CONFIG.videoUrl, "_blank", "noopener"); };
+    vf.onclick = () => openVideoModal(CONFIG.videoUrl);
+    vf.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openVideoModal(CONFIG.videoUrl); } };
   } else {
     vl.textContent = "Assistir vídeo";
     vf.onclick = null;
@@ -59,9 +80,118 @@ function applyConfig(){
   }
 }
 
+// Open a simple modal with an embedded YouTube player (autoplay)
+function openVideoModal(url){
+  const ytId = extractYouTubeID(url);
+  const src = ytId ? `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0` : url;
+
+  // create overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'video-overlay';
+  overlay.innerHTML = `
+    <div class="video-modal">
+      <button class="video-close" aria-label="Fechar">×</button>
+      <div class="video-embed"><iframe src="${src}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+    </div>`;
+  document.body.appendChild(overlay);
+  // focus the close button for accessibility
+  const closeBtn = overlay.querySelector('.video-close');
+  if (closeBtn) closeBtn.focus();
+  // prevent body scroll while modal is open
+  document.body.style.overflow = 'hidden';
+  // close handlers
+  overlay.querySelector('.video-close').addEventListener('click', () => closeVideoModal(overlay));
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeVideoModal(overlay); });
+  // close on Escape
+  const escHandler = (e) => { if (e.key === 'Escape') closeVideoModal(overlay); };
+  document.addEventListener('keydown', escHandler);
+  // store handler reference for removal on close
+  overlay._escHandler = escHandler;
+}
+
+function closeVideoModal(overlay){
+  if (!overlay) return;
+  const iframe = overlay.querySelector('iframe');
+  if (iframe) iframe.src = '';
+  // remove keydown handler if attached
+  if (overlay._escHandler) document.removeEventListener('keydown', overlay._escHandler);
+  overlay.remove();
+  // restore body scroll
+  document.body.style.overflow = '';
+}
+
+// Play a video inline inside the given container element (replaces its content)
+function playVideoInline(containerEl, url){
+  const el = (typeof containerEl === 'string') ? document.querySelector(containerEl) : containerEl;
+  if (!el) return;
+  const ytId = extractYouTubeID(url);
+  const src = ytId ? `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0` : url;
+
+  // create responsive wrapper and iframe
+  const wrapper = document.createElement('div');
+  wrapper.className = 'inline-embed';
+  const iframe = document.createElement('iframe');
+  iframe.setAttribute('src', src);
+  iframe.setAttribute('allow', 'autoplay; encrypted-media');
+  iframe.setAttribute('allowfullscreen', '');
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
+  iframe.style.border = '0';
+  wrapper.appendChild(iframe);
+
+  // replace content
+  el.innerHTML = '';
+  // ensure container can size the iframe
+  el.style.position = 'relative';
+  el.appendChild(wrapper);
+
+  // hide any play button inside the container if present
+  const playBtn = el.querySelector('.play');
+  if (playBtn) playBtn.style.display = 'none';
+}
+
+// For project-specific placeholders, wire click handlers to play inline
+function wireProjectInlinePlayers(){
+  const mapping = [
+    {btnId: 'graafVideo', imgId: 'graafImg'},
+    {btnId: 'manusVideo', imgId: 'manusImg'},
+    {btnId: 'eletrowayVideo', imgId: 'eletrowayImg'},
+  ];
+  // For static site behavior, ensure project video links open in a new tab
+  mapping.forEach(m => {
+    const btn = document.getElementById(m.btnId);
+    if (!btn) return;
+    btn.setAttribute('target', '_blank');
+    btn.setAttribute('rel', 'noopener noreferrer');
+    // remove any inline-play handlers if present
+    btn.onclick = null;
+  });
+}
+
 function smoothScrollTo(el){
   const y = el.getBoundingClientRect().top + window.scrollY - 96;
   window.scrollTo({ top: y, behavior: "smooth" });
+}
+
+// Extract YouTube ID from common URL formats
+function extractYouTubeID(url){
+  if (!url) return null;
+  try{
+    const u = new URL(url);
+    // youtube.com/watch?v=ID
+    if (u.hostname.includes('youtube.com')){
+      return u.searchParams.get('v');
+    }
+    // youtu.be/ID
+    if (u.hostname === 'youtu.be'){
+      return u.pathname.replace(/^\//, '');
+    }
+  } catch(e){
+    // fallback regex
+    const m = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
+    return m ? m[1] : null;
+  }
+  return null;
 }
 
 function setupLearnMore(){
@@ -158,6 +288,8 @@ async function fetchConfigFromSheet(){
     if (obj.graaf_link) setHref('graafVideo', obj.graaf_link);
     if (obj.manus_link) setHref('manusVideo', obj.manus_link);
     if (obj.eletroway_link) setHref('eletrowayVideo', obj.eletroway_link);
+    // wire inline players for project placeholders
+    wireProjectInlinePlayers();
   } catch (e){
     // fail silently but log for debugging
     console.warn('Could not load sheet config', e);
@@ -165,7 +297,7 @@ async function fetchConfigFromSheet(){
 }
 
 // Provided spreadsheet id (public CSV). Update if you publish a different sheet.
-fetchConfigFromSheet('https://docs.google.com/spreadsheets/d/e/2PACX-1vRkpLBKox1C-njZozGy5TMamCZCiqWZeqeSUtEQzjx3l4ebTrrgZyJ-KtHnojay4TOQGQhWsfiyHiN6/pub?gid=0&single=true&output=csv');
+fetchConfigFromSheet();
 
 
 const LOGO1 = document.querySelectorAll("img.logo")[0];

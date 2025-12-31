@@ -4,561 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Rifa • Pró-Ativa Eletrônica</title>
-  <style>
-    :root{
-      --bg0:#070b14;
-      --bg1:#0b1220;
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.04);
-      --line:rgba(255,255,255,.10);
-      --text:#eaf0ff;
-      --muted:#aab6cf;
-      --brand:#f4c542;
-      --brand2:#ffd76a;
-      --shadow:0 18px 60px rgba(0,0,0,.45);
-      --r14:14px;
-      --r18:18px;
-      --r24:24px;
-      --max:1120px;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 20% -10%, rgba(244,197,66,.18), transparent 60%),
-        radial-gradient(900px 500px at 90% 0%, rgba(255,215,106,.12), transparent 55%),
-        radial-gradient(800px 500px at 80% 55%, rgba(244,197,66,.10), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg0) 70%);
-    }
-
-    a{color:inherit}
-    .wrap{max-width:var(--max); margin:0 auto; padding:18px 16px 72px}
-
-    .topbar{
-      position:sticky;
-      top:14px;
-      z-index:50;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 12px;
-      border:1px solid var(--line);
-      border-radius:var(--r18);
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      box-shadow:var(--shadow);
-      backdrop-filter: blur(12px);
-    }
-
-    .brand-left{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-
-    .logo-group{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(0,0,0,.18);
-    }
-
-    .logo{
-      width:40px;
-      height:40px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      padding:6px;
-      object-fit:contain;
-      flex:0 0 auto;
-    }
-
-    .brand-text{min-width:0}
-    .kicker{
-      font-size:11px;
-      color:var(--muted);
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:48vw;
-    }
-    .title{
-      margin-top:2px;
-      font-size:13px;
-      font-weight:800;
-      letter-spacing:.01em;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:48vw;
-    }
-
-    .actions{
-      display:flex;
-      align-items:center;
-      justify-content:flex-end;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
-      font-size:13px;
-      white-space:nowrap;
-    }
-
-    .btn{
-      appearance:none;
-      border:0;
-      cursor:pointer;
-      padding:12px 14px;
-      border-radius:999px;
-      font-weight:900;
-      letter-spacing:.01em;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      white-space:nowrap;
-      transition: transform .08s ease, filter .2s ease;
-    }
-    .btn:active{transform:translateY(1px)}
-    .btn.primary{
-      background:linear-gradient(180deg, var(--brand2), var(--brand));
-      color:#1a1405;
-      box-shadow:0 14px 34px rgba(244,197,66,.22);
-    }
-    .btn.ghost{
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      color:var(--text);
-      font-weight:800;
-    }
-
-    .hero{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns: 1.18fr .82fr;
-      gap:14px;
-      align-items:stretch;
-    }
-
-    .card{
-      border:1px solid var(--line);
-      border-radius:var(--r24);
-      background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
-      box-shadow:var(--shadow);
-      overflow:hidden;
-    }
-
-    .hero-main{
-      padding:22px 20px;
-      background:
-        radial-gradient(800px 360px at 10% 0%, rgba(244,197,66,.16), transparent 62%),
-        radial-gradient(600px 320px at 95% 40%, rgba(255,215,106,.10), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:9px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.20);
-      color:var(--muted);
-      font-size:13px;
-      white-space:nowrap;
-    }
-
-    h1{
-      margin:14px 0 0;
-      font-size:44px;
-      line-height:1.05;
-      letter-spacing:-.03em;
-    }
-
-    .sub{
-      margin:12px 0 0;
-      color:var(--muted);
-      font-size:16px;
-      line-height:1.55;
-      max-width:64ch;
-    }
-
-    .cta-row{
-      margin-top:18px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
-    .stats{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-      padding:12px;
-      border-radius:var(--r18);
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.18);
-    }
-
-    .stat{
-      border-radius:var(--r18);
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.03);
-      padding:12px 12px;
-      min-height:86px;
-    }
-    .stat .label{
-      font-size:11px;
-      color:var(--muted);
-      letter-spacing:.12em;
-      text-transform:uppercase;
-    }
-    .stat .value{
-      margin-top:6px;
-      font-size:24px;
-      font-weight:950;
-      letter-spacing:-.02em;
-    }
-    .stat .hint{
-      margin-top:4px;
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.35;
-    }
-
-    .video{
-      position:relative;
-      height:100%;
-      min-height:340px;
-      padding:16px;
-      background:
-        radial-gradient(700px 360px at 55% 45%, rgba(244,197,66,.16), transparent 62%),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-    }
-
-    .video-frame{
-      position:absolute;
-      inset:16px;
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,.56)),
-        radial-gradient(900px 500px at 60% 40%, rgba(244,197,66,.20), transparent 60%);
-      box-shadow:0 20px 60px rgba(0,0,0,.55);
-      overflow:hidden;
-      display:flex;
-      align-items:flex-end;
-    }
-
-    .video-frame::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        radial-gradient(1200px 600px at 70% 35%, rgba(255,255,255,.08), transparent 60%),
-        radial-gradient(700px 400px at 30% 10%, rgba(255,215,106,.08), transparent 55%);
-      pointer-events:none;
-    }
-
-    .play{
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform:translate(-50%,-50%);
-      width:84px;
-      height:84px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(0,0,0,.28);
-      display:grid;
-      place-items:center;
-      backdrop-filter: blur(10px);
-    }
-
-    .play svg{display:block}
-    .video-meta{
-      position:relative;
-      width:100%;
-      padding:14px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      border-top:1px solid rgba(255,255,255,.12);
-      background:linear-gradient(180deg, rgba(0,0,0,.00), rgba(0,0,0,.40));
-    }
-
-    .video-meta .t{
-      font-weight:900;
-      letter-spacing:-.01em;
-    }
-    .video-meta .s{
-      font-size:13px;
-      color:var(--muted);
-      margin-top:3px;
-      line-height:1.35;
-    }
-
-    .linkbar{
-      margin-top:14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:14px 14px;
-      border-radius:var(--r18);
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.18);
-    }
-
-    .linkbar .left{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      min-width:0;
-    }
-
-    .icon{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.05);
-      display:grid;
-      place-items:center;
-      flex:0 0 auto;
-    }
-
-    .linkbar .txt{min-width:0}
-    .linkbar .txt .a{
-      font-weight:900;
-      letter-spacing:-.01em;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width:52vw;
-    }
-    .linkbar .txt .b{
-      margin-top:4px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.35;
-    }
-
-    .section{
-      margin-top:22px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:12px;
-    }
-
-    .section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:12px;
-      padding:0 6px;
-    }
-
-    .section-head h2{
-      margin:0;
-      font-size:20px;
-      letter-spacing:-.02em;
-    }
-    .section-head p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .grid3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
-
-    .proj{
-      padding:16px 16px;
-      border-radius:var(--r24);
-      border:1px solid rgba(255,255,255,.10);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow:var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .proj::before{
-      content:"";
-      position:absolute;
-      inset:-120px -120px auto auto;
-      width:280px;
-      height:280px;
-      background:radial-gradient(circle at 35% 35%, rgba(244,197,66,.20), transparent 62%);
-      transform:rotate(18deg);
-      pointer-events:none;
-    }
-
-    .proj .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.18);
-      color:var(--muted);
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      position:relative;
-      z-index:1;
-    }
-
-    .proj h3{
-      margin:12px 0 0;
-      font-size:18px;
-      letter-spacing:-.02em;
-      position:relative;
-      z-index:1;
-    }
-
-    .proj .quick{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.45;
-      position:relative;
-      z-index:1;
-    }
-
-    .accordion{
-      margin-top:12px;
-      border-top:1px solid rgba(255,255,255,.10);
-      padding-top:12px;
-      position:relative;
-      z-index:1;
-    }
-
-    .acc-btn{
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
-      color:var(--text);
-      cursor:pointer;
-      font-weight:900;
-      letter-spacing:.01em;
-    }
-
-    .acc-btn span{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-    }
-
-    .chev{
-      width:18px;
-      height:18px;
-      transition: transform .18s ease;
-      opacity:.9;
-      flex:0 0 auto;
-    }
-
-    .acc-panel{
-      max-height:0;
-      overflow:hidden;
-      transition: max-height .22s ease;
-      border-radius:16px;
-    }
-
-    .acc-panel .inner{
-      margin-top:10px;
-      padding:12px 12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.18);
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.55;
-    }
-
-    .expanded .chev{transform:rotate(180deg)}
-    .expanded + .acc-panel{max-height:520px}
-
-    .footer{
-      margin-top:24px;
-      padding:16px 6px 0;
-      color:rgba(255,255,255,.55);
-      font-size:12px;
-      line-height:1.45;
-    }
-
-    .glowline{
-      height:1px;
-      background:linear-gradient(90deg, transparent, rgba(244,197,66,.60), transparent);
-      margin:18px 0 10px;
-      opacity:.55;
-    }
-
-    @media (max-width: 980px){
-      .hero{grid-template-columns:1fr; }
-      .video{min-height:300px}
-      .grid3{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr}
-      h1{font-size:38px}
-      .kicker,.title{max-width:62vw}
-    }
-
-    @media (max-width: 520px){
-      .topbar{gap:10px}
-      .logo{width:36px;height:36px;border-radius:12px}
-      h1{font-size:34px}
-      .btn{width:100%}
-      .actions{width:100%}
-      .chip{display:none}
-      .kicker,.title{max-width:70vw}
-      .linkbar{flex-direction:column; align-items:stretch}
-      .linkbar .txt .a{max-width:100%}
-    }
-  </style>
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
   <div class="wrap">
     <header class="topbar">
       <div class="brand-left">
         <div class="logo-group" aria-label="Logos">
-          <img class="logo" alt="Logo Engenharia Elétrica UFOP" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAYAAAB2sW3kAAAgAElEQVR4nO3deXxU9f3/8deZ2Z2d2x0L2wqLqK...TRUNCATED_FOR_DISPLAY..."/>
-          <img class="logo" alt="Logo BitLab (Pró-Ativa Eletrônica)" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAKACAYAAAB...TRUNCATED_FOR_DISPLAY..."/>
+          <img class="logo" alt="Logo Engenharia Elétrica UFOP" src="assets/img/deelt-logo.png"/>
+          <img class="logo" alt="Logo BitLab (Pró-Ativa Eletrônica)" src="assets/img/bit-lab-logo.png"/>
         </div>
         <div class="brand-text">
           <div class="kicker">Pró-Ativa • Eletrônica • Mostra de Profissões</div>
@@ -567,9 +21,9 @@
       </div>
 
       <div class="actions">
-        <div class="chip">🎥 Vídeo curto explicativo</div>
+        <a class="chip" id="videoChip" href="#" target="_blank" rel="noopener">🎥 Vídeo explicativo</a>
         <div class="chip" id="soldChip">🎫 Rifas vendidas: <b id="soldText">320 / 1.000</b></div>
-        <a class="btn primary" id="buyTop" href="https://forms.gle/SEU_LINK_AQUI" target="_blank" rel="noopener">Comprar + enviar comprovante</a>
+        <a class="btn primary" id="buyTop" href="#" target="_blank" rel="noopener">Comprar + enviar comprovante</a>
       </div>
     </header>
 
@@ -581,7 +35,7 @@
           <p class="sub">Apoie a criação de dispositivos interativos didáticos do Pró-Ativa Eletrônica (UFOP). Todo o valor arrecadado é reinvestido nos projetos.</p>
 
           <div class="cta-row">
-            <a class="btn primary" id="buyHero" href="https://forms.gle/SEU_LINK_AQUI" target="_blank" rel="noopener">Comprar número da rifa</a>
+            <a class="btn primary" id="buyHero" href="#" target="_blank" rel="noopener">Comprar número da rifa</a>
             <button class="btn ghost" id="learnMoreBtn" type="button">Saiba mais</button>
           </div>
 
@@ -614,7 +68,7 @@
             <div class="video-meta">
               <div>
                 <div class="t">Vídeo explicativo</div>
-                <div class="s">Clique para abrir (substitua pelo link do seu vídeo)</div>
+                <div class="s">Clique para abrir </div>
               </div>
               <a class="btn ghost" style="padding:10px 12px" id="videoLink" href="#" onclick="return false">Abrir</a>
             </div>
@@ -638,14 +92,13 @@
             <div class="b">Abra o formulário, escolha a quantidade de números e envie o comprovante no final.</div>
           </div>
         </div>
-        <a class="btn primary" id="formBtn" href="https://forms.gle/SEU_LINK_AQUI" target="_blank" rel="noopener">Abrir formulário</a>
+        <a class="btn primary" id="formBtn" href="#" target="_blank" rel="noopener">Abrir formulário</a>
       </div>
 
       <section class="section" id="learnMore">
         <div class="section-head">
           <div>
             <h2>Projetos já construídos</h2>
-            <p>Curto e direto. Quem quiser detalhes, abre.</p>
           </div>
         </div>
 
@@ -655,7 +108,12 @@
             <h3>Gerador de Van de Graaff</h3>
             <div class="quick">Eletricidade estática na prática. Visual, seguro e memorável.</div>
 
-            <div class="accordion">
+              <div class="proj-media">
+                <img class="proj-img" id="graafImg" src="assets/img/placeholder.svg" alt="Van de Graaff (placeholder)">
+                <a class="btn ghost proj-video" id="graafVideo" href="#" target="_blank" rel="noopener">Ver vídeo</a>
+              </div>
+
+              <div class="accordion">
               <button class="acc-btn" type="button" aria-expanded="false">
                 <span>Saiba mais</span>
                 <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -673,7 +131,12 @@
             <h3>Mão Robótica “Manus”</h3>
             <div class="quick">Controle por botões/joystick + câmera. Altamente chamativo.</div>
 
-            <div class="accordion">
+              <div class="proj-media">
+                <img class="proj-img" id="manusImg" src="assets/img/placeholder.svg" alt="Mão Robótica (placeholder)">
+                <a class="btn ghost proj-video" id="manusVideo" href="#" target="_blank" rel="noopener">Ver vídeo</a>
+              </div>
+
+              <div class="accordion">
               <button class="acc-btn" type="button" aria-expanded="false">
                 <span>Saiba mais</span>
                 <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -691,7 +154,12 @@
             <h3>EletroWay</h3>
             <div class="quick">Percorra o trajeto sem encostar. Contato elétrico detectado na hora.</div>
 
-            <div class="accordion">
+              <div class="proj-media">
+                <img class="proj-img" id="eletrowayImg" src="assets/img/placeholder.svg" alt="EletroWay (placeholder)">
+                <a class="btn ghost proj-video" id="eletrowayVideo" href="#" target="_blank" rel="noopener">Ver vídeo</a>
+              </div>
+
+              <div class="accordion">
               <button class="acc-btn" type="button" aria-expanded="false">
                 <span>Saiba mais</span>
                 <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -720,105 +188,24 @@
               <div class="b">Compra e envio do comprovante pelo formulário.</div>
             </div>
           </div>
-          <a class="btn primary" id="buyBottom" href="https://forms.gle/SEU_LINK_AQUI" target="_blank" rel="noopener">Comprar agora</a>
+          <a class="btn primary" id="buyBottom" href="#" target="_blank" rel="noopener">Comprar agora</a>
         </div>
 
         <div class="footer">
-          Ajuste rápido: substitua <b>SEU_LINK_AQUI</b> pelo link real do Google Form. Se quiser, eu também deixo o campo “rifas vendidas / total / preço” parametrizado para você alterar em 1 lugar só.
+          <p style="display:inline">© 2025 Pró-Ativa Eletrônica • Engenharia Elétrica UFOP • Desenvolvido por BitLab</p>
+          <a id="instagramLink" class="chip" href="#" target="_blank" rel="noopener" style="margin-left:12px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:8px">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/>
+            </svg>
+            <span id="instagramText">Instagram</span>
+          </a>
         </div>
       </section>
     </main>
   </div>
 
-  <script>
-    const CONFIG = {
-      googleFormUrl: "https://forms.gle/SEU_LINK_AQUI",
-      price: "R$ 10,00",
-      sold: 320,
-      total: 1000,
-      daysLeftText: "20 dias restantes",
-      videoUrl: ""
-    };
-
-    function setHref(id, url){
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.setAttribute("href", url);
-    }
-
-    function formatPT(num){
-      return new Intl.NumberFormat("pt-BR").format(num);
-    }
-
-    function applyConfig(){
-      document.getElementById("priceText").textContent = CONFIG.price;
-      document.getElementById("soldNum").textContent = formatPT(CONFIG.sold);
-      document.getElementById("totalNum").textContent = formatPT(CONFIG.total);
-      document.getElementById("daysText").textContent = CONFIG.daysLeftText;
-
-      const soldLine = `${formatPT(CONFIG.sold)} / ${formatPT(CONFIG.total)}`;
-      document.getElementById("soldText").textContent = soldLine;
-
-      ["buyTop","buyHero","buyBottom","formBtn"].forEach(id => setHref(id, CONFIG.googleFormUrl));
-
-      const vf = document.getElementById("videoFrame");
-      const vl = document.getElementById("videoLink");
-
-      if (CONFIG.videoUrl && CONFIG.videoUrl.trim().length > 0){
-        vl.setAttribute("href", CONFIG.videoUrl);
-        vl.onclick = null;
-        vl.textContent = "Abrir vídeo";
-        vf.onclick = () => window.open(CONFIG.videoUrl, "_blank", "noopener");
-        vf.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") window.open(CONFIG.videoUrl, "_blank", "noopener"); };
-      } else {
-        vl.textContent = "Adicionar link";
-        vf.onclick = null;
-        vf.onkeydown = null;
-      }
-    }
-
-    function smoothScrollTo(el){
-      const y = el.getBoundingClientRect().top + window.scrollY - 96;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-
-    function setupLearnMore(){
-      const btn = document.getElementById("learnMoreBtn");
-      const target = document.getElementById("learnMore");
-      btn.addEventListener("click", () => smoothScrollTo(target));
-    }
-
-    function setupAccordions(){
-      const buttons = Array.from(document.querySelectorAll(".acc-btn"));
-      buttons.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const expanded = btn.getAttribute("aria-expanded") === "true";
-          buttons.forEach(b => {
-            b.setAttribute("aria-expanded", "false");
-            b.classList.remove("expanded");
-          });
-          if (!expanded){
-            btn.setAttribute("aria-expanded", "true");
-            btn.classList.add("expanded");
-          }
-        });
-      });
-    }
-
-    applyConfig();
-    setupLearnMore();
-    setupAccordions();
-  </script>
-
-  <script>
-    const LOGO1 = document.querySelectorAll("img.logo")[0];
-    const LOGO2 = document.querySelectorAll("img.logo")[1];
-
-    const LOGO1_B64 = `iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAYAAAB2sW3kAAAgAElEQVR4nO3deXxU9f3/8deZ2Z2d2x0L2wqLqK...`;
-    const LOGO2_B64 = `iVBORw0KGgoAAAANSUhEUgAAAoAAAAKACAYAAAB...`;
-
-    if (LOGO1 && LOGO1_B64 && LOGO1_B64.indexOf("...") === -1) LOGO1.src = "data:image/png;base64," + LOGO1_B64;
-    if (LOGO2 && LOGO2_B64 && LOGO2_B64.indexOf("...") === -1) LOGO2.src = "data:image/png;base64," + LOGO2_B64;
-  </script>
+  <script src="js/main.js"></script>
 </body>
 </html>
